@@ -15,15 +15,17 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class RetrofitHelper {
-
+    //饿汉式
+    //TODO 步骤一：私有化成员变量
     private static RetrofitHelper retrofitHelper = new RetrofitHelper();
+
     private final Retrofit baiduRetrofit;
     private final Retrofit fishingRetrofit;
     private final Retrofit testRetrofit;
     private final BaiduService baiduService;
     private final BaiduService fishingService;
     private final BaiduService testService;
-
+    //TODO 步骤2：私有化构造方法
     private RetrofitHelper() {
         OkHttpClient.Builder okbuilder = new OkHttpClient.Builder();
         OkHttpClient okHttpClient = okbuilder.build();
@@ -42,7 +44,7 @@ public class RetrofitHelper {
         builder2.client(okHttpClient);
         fishingRetrofit = builder2.build();
         //实例化 第一步定义的接口
-        fishingService = fishingRetrofit.create(BaiduService.class);
+        fishingService = fishingRetrofit.create(BaiduService.class); //这一部分是属于封装了一下   动态代理模式
 
 
 
@@ -56,7 +58,7 @@ public class RetrofitHelper {
         testService = testRetrofit.create(BaiduService.class);
 
     }
-
+    //TODO 步骤三：提供一个公共方法用于返回成员变量
     public static RetrofitHelper getInstance() {
         return retrofitHelper;
     }
